@@ -14,7 +14,8 @@ repos.get('/', async (_: Request, res: Response) => {
   try{
     const githubRepos = await getGithubRepos();
     let mergedRepos = githubRepos.concat(jsonFileRepos);
-  
+    
+    // Filters Repos
     const filteredRepos = mergedRepos.filter((repo:any) => {
       return repo.fork === false;
     });

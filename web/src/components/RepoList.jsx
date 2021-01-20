@@ -41,17 +41,20 @@ const RepoDetails = () => {
       <h1>List of sample repositories</h1>
       {response !== 'Success' && <p>Error loading data: {response}</p>}
       <div className="buttons">
-        {languages.length > 0 &&
-          languages.map((language) => {
-            return (
-              <button
-                key={language}
-                onClick={() => filterReposByLanguage(language)}
-              >
-                {language}
-              </button>
-            );
-          })}
+        {
+          // Displays buttons based on languages present in repo array
+          languages.length > 0 &&
+            languages.map((language) => {
+              return (
+                <button
+                  key={language}
+                  onClick={() => filterReposByLanguage(language)}
+                >
+                  {language}
+                </button>
+              );
+            })
+        }
         <button onClick={() => setRepositories(defaultRepos)}>Show All</button>
       </div>
       <table>
@@ -64,24 +67,30 @@ const RepoDetails = () => {
           </tr>
         </thead>
         <tbody>
-          {repositories.length > 0 ? (
-            repositories.map((repo) => (
-              <tr key={repo.id}>
-                <td>
-                  <Link to="/RepoDetails" onClick={() => saveRepoDetails(repo)}>
-                    {repo.name}
-                  </Link>
-                </td>
-                <td>{repo.description}</td>
-                <td>{repo.language}</td>
-                <td>{repo.forks_count}</td>
+          {
+            // If we received repos, creates clickable table rows with data.
+            repositories.length > 0 ? (
+              repositories.map((repo) => (
+                <tr key={repo.id}>
+                  <td>
+                    <Link
+                      to="/RepoDetails"
+                      onClick={() => saveRepoDetails(repo)}
+                    >
+                      {repo.name}
+                    </Link>
+                  </td>
+                  <td>{repo.description}</td>
+                  <td>{repo.language}</td>
+                  <td>{repo.forks_count}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No data was retrieved</td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4">No data was retrieved</td>
-            </tr>
-          )}
+            )
+          }
         </tbody>
       </table>
     </React.Fragment>

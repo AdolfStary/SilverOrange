@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getLatestCommit } from '../utility/api-calls';
 
 const RepoDetails = () => {
-  const [commit, setCommit] = useState({});
+  const [commit, setCommit] = useState(undefined);
   const repo =
     sessionStorage.getItem('repo') !== null &&
     sessionStorage.getItem('repo').trim() !== ''
@@ -16,17 +16,24 @@ const RepoDetails = () => {
       setCommit(thisCommit);
     };
     fetchCommit();
-  }, [repo.commits_url]);
-  console.log(commit);
+    // eslint-disable-next-line
+  }, []);
   return (
     <div>
       <div className="repo-info">
         <ul>
           <li>
-            Most Recent commit: {new Date(commit.author.date).toLocaleString()}
+            <b>Most Recent commit: </b>
+            {commit && new Date(commit.author.date).toLocaleString()}
           </li>
-          <li>Author: {commit.author.name}</li>
-          <li>Message: {commit.message}</li>
+          <li>
+            <b>Author: </b>
+            {commit && commit.author.name}
+          </li>
+          <li>
+            <b>Message: </b>
+            {commit && commit.message}
+          </li>
         </ul>
       </div>
       <Link to="/RepoList">

@@ -28,4 +28,19 @@ const getLatestCommit = async (url) => {
   return latestCommit[0].commit;
 };
 
-export { getRepos, getLatestCommit };
+const getReadme = async (fullRepoName) => {
+  const url = `https://raw.githubusercontent.com/${fullRepoName}/master/README.md`;
+  const readme = await axios({
+    method: 'GET',
+    url,
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      throw err;
+    });
+  return readme;
+}
+
+export { getRepos, getLatestCommit, getReadme };
