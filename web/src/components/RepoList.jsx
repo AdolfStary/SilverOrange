@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getRepos } from '../utility/api-calls';
+import { saveRepoDetails } from '../utility/general';
 import '../css/repo-list.css';
 
 const RepoDetails = () => {
@@ -9,6 +11,14 @@ const RepoDetails = () => {
     const fetchRepos = async () => {
       try {
         const repos = await getRepos();
+        /*repos.sort((a, b) => {
+          if (a.created_at > b.created_at) {
+            return 1;
+          } else if (a.created_at < b.created_at) {
+            return -1;
+          }
+          return 0;
+        });*/
         setRepositories(repos);
         setResponse('Success');
       } catch (err) {
@@ -34,7 +44,11 @@ const RepoDetails = () => {
           {repositories.length > 0 ? (
             repositories.map((repo) => (
               <tr key={repo.id}>
-                <td>{repo.name}</td>
+                <td>
+                  <Link to="/RepoDetails" onClick={() => saveRepoDetails(repo)}>
+                    {repo.name}
+                  </Link>
+                </td>
                 <td>{repo.description}</td>
                 <td>{repo.language}</td>
                 <td>{repo.forks_count}</td>

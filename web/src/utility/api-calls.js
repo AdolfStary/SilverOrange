@@ -5,7 +5,6 @@ const getRepos = async () => {
     url: 'http://localhost:4000/repos',
   })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((err) => {

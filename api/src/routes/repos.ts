@@ -11,17 +11,22 @@ repos.get('/', async (_: Request, res: Response) => {
   });
 
   // TODO: See README.md Task (A). Return repo data here. You’ve got this!
-  //res.json({...githubRepos, jsonFileRepos});
+  try{
+    const githubRepos = await getGithubRepos();
+    let mergedRepos = githubRepos.concat(jsonFileRepos);
+  
+    const filteredRepos = mergedRepos.filter((repo:any) => {
+      return repo.fork === false;
+    });
+  
+    res.status(200);
+    res.json(filteredRepos);  
+  }
+  catch (err){
+    res.status(400);
+    res.json(err);
+  }
 
-  const githubRepos = await getGithubRepos();
-  let mergedRepos = githubRepos.concat(jsonFileRepos);
-
-  const filteredRepos = mergedRepos.filter((repo:any) => {
-    return repo.fork === false;
-  });
-
-  res.status(200);
-  res.json(filteredRepos);  
 });
 
 const getGithubRepos = async () => {
@@ -32,6 +37,8 @@ const getGithubRepos = async () => {
     }
   ).then((res) => {
     return res.data;
+  }).catch((err) => {
+    throw err;
   });
   return repos;
 }
