@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "lint": "^0.7.0"
+    "html-react-parser": "^1.2.1",
+    "lint": "^0.7.0",
+    "marked": "^1.2.7"
   }
 }

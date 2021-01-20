@@ -41,6 +41,6 @@ const getReadme = async (fullRepoName) => {
       throw err;
     });
   return readme;
-}
+};
 
 export { getRepos, getLatestCommit, getReadme };
