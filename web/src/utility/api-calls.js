@@ -12,4 +12,20 @@ const getRepos = async () => {
     });
   return repos;
 };
-export { getRepos };
+
+const getLatestCommit = async (url) => {
+  url = url.slice(0, -6);
+  const latestCommit = await axios({
+    method: 'GET',
+    url,
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      throw err;
+    });
+  return latestCommit[0].commit;
+};
+
+export { getRepos, getLatestCommit };
