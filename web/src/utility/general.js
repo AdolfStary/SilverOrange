@@ -10,4 +10,15 @@ const sortByDateCreated = (a, b) => {
   }
   return 0;
 };
-export { saveRepoDetails, sortByDateCreated };
+
+const getLanguages = (repoList) => {
+  const languages = [];
+
+  repoList.forEach((repo) => {
+    if (!languages.includes(repo.language)) {
+      languages.push(repo.language);
+    }
+  });
+  return languages;
+};
+export { saveRepoDetails, sortByDateCreated, getLanguages };
