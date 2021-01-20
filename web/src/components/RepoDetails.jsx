@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import marked from 'marked';
 import parse from 'html-react-parser';
 import { getLatestCommit, getReadme } from '../utility/api-calls';
+import '../css/repo-details.css';
 // Used 'marked' package for automatic markdown
 const RepoDetails = () => {
   const [commit, setCommit] = useState(undefined);
   const [readme, setReadme] = useState(undefined);
+  // Pull clicked repo JSON from sessionStorage
   const repo =
     sessionStorage.getItem('repo') !== null &&
     sessionStorage.getItem('repo').trim() !== ''
@@ -26,6 +28,11 @@ const RepoDetails = () => {
   return (
     <div>
       <div className="repo-info">
+        <div className="right">
+          <Link to="/RepoList">
+            <button>Return to List</button>
+          </Link>
+        </div>
         <h2>Latest Commit Details</h2>
         {commit ? (
           <ul>

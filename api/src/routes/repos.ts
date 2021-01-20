@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import jsonFileRepos from '../../data/repos.json';
-import axios from 'axios';
+import getGithubRepos from '../middleware/getGithubRepos';
 
 export const repos = Router();
 
@@ -30,16 +30,4 @@ repos.get('/', async (_: Request, res: Response) => {
 
 });
 
-const getGithubRepos = async () => {
-  const repos = await axios(
-    {
-      method: 'get',
-       url: 'https://api.github.com/users/silverorange/repos'
-    }
-  ).then((res) => {
-    return res.data;
-  }).catch((err) => {
-    throw err;
-  });
-  return repos;
-}
+

@@ -7,6 +7,7 @@ import {
   getLanguages,
 } from '../utility/general';
 import '../css/repo-list.css';
+import LanguageFilter from './LanguageFilter';
 
 const RepoDetails = () => {
   const [repositories, setRepositories] = useState([]);
@@ -14,17 +15,11 @@ const RepoDetails = () => {
   const [languages, setLanguages] = useState([]);
   const [response, setResponse] = useState('Success');
 
-  const filterReposByLanguage = (language) => {
-    const filteredRepos = defaultRepos.filter((repo) => {
-      return repo.language === language;
-    });
-    setRepositories(filteredRepos);
-  };
-
   useEffect(() => {
     const fetchRepos = async () => {
       try {
         const repos = await getRepos();
+        // Sorts repos in reverse chronological order by date created
         repos.sort((a, b) => sortByDateCreated(a, b));
         setRepositories(repos);
         setDefaultRepos(repos);
@@ -40,23 +35,11 @@ const RepoDetails = () => {
     <React.Fragment>
       <h1>List of sample repositories</h1>
       {response !== 'Success' && <p>Error loading data: {response}</p>}
-      <div className="buttons">
-        {
-          // Displays buttons based on languages present in repo array
-          languages.length > 0 &&
-            languages.map((language) => {
-              return (
-                <button
-                  key={language}
-                  onClick={() => filterReposByLanguage(language)}
-                >
-                  {language}
-                </button>
-              );
-            })
-        }
-        <button onClick={() => setRepositories(defaultRepos)}>Show All</button>
-      </div>
+      <LanguageFilter
+        languages={languages}
+        defaultRepos={defaultRepos}
+        setRepositories={setRepositories}
+      />
       <table>
         <thead>
           <tr>

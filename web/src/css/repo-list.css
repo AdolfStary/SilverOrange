@@ -1,17 +1,20 @@
 #root {
-    width: 800px;
-    margin: 150px auto;
+  width: 800px;
+  margin: 150px auto;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
 }
 table {
-    text-align: center;
+  text-align: center;
+  width: 100%;
 }
 
-table, th, td {
-    border: 1px solid #000000;
-    border-radius: 5px;
-    padding: 15px;
+table,
+th,
+td {
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 15px;
 }
