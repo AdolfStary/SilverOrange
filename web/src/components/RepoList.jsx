@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getRepos } from '../utility/api-calls';
-import { saveRepoDetails } from '../utility/general';
+import { saveRepoDetails, sortByDateCreated } from '../utility/general';
 import '../css/repo-list.css';
 
 const RepoDetails = () => {
@@ -11,14 +11,7 @@ const RepoDetails = () => {
     const fetchRepos = async () => {
       try {
         const repos = await getRepos();
-        /*repos.sort((a, b) => {
-          if (a.created_at > b.created_at) {
-            return 1;
-          } else if (a.created_at < b.created_at) {
-            return -1;
-          }
-          return 0;
-        });*/
+        repos.sort((a, b) => sortByDateCreated(a, b));
         setRepositories(repos);
         setResponse('Success');
       } catch (err) {
